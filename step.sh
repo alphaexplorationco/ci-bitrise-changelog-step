@@ -19,8 +19,8 @@ else
     echo "Fetching commits since last tag."
 
     # We have many tags, fetch since last one
-    latest_tag=`git describe --tags`
-    previous_tag="$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))"
+    latest_tag=`git tag --sort=-creatordate | head -1`
+    previous_tag=`git tag --sort=-creatordate | head -2 | tail -1`
 
     # Get commit messages since previous tag
     changelog="$(git log --pretty=format:"$git_log_format" --date=format:"%Y-%m-%d %H:%M:%S" $latest_tag...$previous_tag)"
