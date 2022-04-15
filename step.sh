@@ -20,10 +20,9 @@ else
 
     # We have many tags, fetch since last one
     latest_tag=`git tag --sort=-creatordate | head -1`
-    previous_tag=`git tag --sort=-creatordate | head -2 | tail -1`
 
     # Get commit messages since previous tag
-    changelog="$(git log --pretty=format:"$git_log_format" --date=format:"%Y-%m-%d %H:%M:%S" $latest_tag...$previous_tag)"
+    changelog="$(git log --pretty=format:"$git_log_format" --date=format:"%Y-%m-%d %H:%M:%S" $latest_tag..$HEAD)"
 fi
 
 # Add branch info
@@ -46,7 +45,6 @@ fi
 # Output collected information
 echo "Committer: $(git log --pretty=format:"%ce" HEAD^..HEAD)"
 echo "Latest tag: $latest_tag"
-echo "Previous tag: $previous_tag"
 echo "Changelog:"
 echo "$changelog"
 
